@@ -13,10 +13,12 @@ public:
     TimeService();
     static time_t getNtpTime();
     time_t getTime();
+    int getCurrentHour();
+    int getCurrentMinute();
+    void printDigitalClock();
 
 private:
     static void sendNTPpacket(IPAddress &address);
-    void digitalClockDisplay();
     void printDigits(int digits);
 };
 
