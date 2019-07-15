@@ -3,6 +3,7 @@
 
 #include <model/IrrigationSystemStatus.h>
 #include <model/PumpController.h>
+#include <service/TimeService.h>
 
 class IrrigationSystemService
 {
@@ -10,11 +11,12 @@ class IrrigationSystemService
 private:
     IrrigationSystemStatus *systemStatus;
     std::vector<PumpController *> pumpControllerList;
+    TimeService *timeService;
 
-public:
-    IrrigationSystemService();
+        public : IrrigationSystemService(TimeService *tService);
     IrrigationSystemService(IrrigationSystemStatus *status,
-                            std::vector<PumpController *> pumpControllerList);
+                            std::vector<PumpController *> pumpControllerList,
+                            TimeService *tService);
     void controlIrrigationSystem(IrrigationSystemStatus *status);
     void activatePump(int pumpId);
     void deactivatePump(int pumpId);
