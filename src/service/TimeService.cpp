@@ -27,7 +27,7 @@ time_t TimeService::getTime()
 {
     if (timeStatus() != timeNotSet)
     {
-        digitalClockDisplay();
+        //digitalClockDisplay();
         return now();
     }
 

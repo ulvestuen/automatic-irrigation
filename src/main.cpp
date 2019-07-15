@@ -47,6 +47,4 @@ void loop(void)
 {
   irrigationSystemApi->handleClient();
   irrigationSystemService->controlIrrigationSystem(systemStatus);
-  delay(2000);
-  timeService->getTime();
 }

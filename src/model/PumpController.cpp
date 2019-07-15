@@ -22,7 +22,7 @@ boolean PumpController::getIsActive()
 void PumpController::setPumpSpeedSetpoint(int speed)
 {
     pumpDutyCycle = ((double)speed) / 100;
-    pumpActivationTime = now();
+    pumpActivationTime = timeService->getTime();
     pumpNextActivationTime = pumpActivationTime + PUMP_MAX_ACTIVE_TIME;
 }
 
@@ -39,7 +39,7 @@ void PumpController::controlPumpSpeed()
         return;
     }
 
-    time_t nowTime = now();
+    time_t nowTime = timeService->getTime();
     if (nowTime < pumpActivationTime + pumpDutyCycle * PUMP_MAX_ACTIVE_TIME)
     {
         digitalWrite(pumpOutputPin, HIGH);

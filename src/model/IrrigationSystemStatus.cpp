@@ -1,4 +1,4 @@
-#include <model/IrrigationSystemStatus.h>q
+#include <model/IrrigationSystemStatus.h>
 
 IrrigationSystemStatus::IrrigationSystemStatus(std::vector<PumpController *> pumpControllerList,
                                                TimeService *timeService)
