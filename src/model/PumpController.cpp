@@ -1,8 +1,8 @@
 #include <model/PumpController.h>
 
-PumpController::PumpController() {}
+PumpController::PumpController(TimeService *timeService) {}
 
-PumpController::PumpController(uint8_t pin)
+PumpController::PumpController(uint8_t pin, TimeService *timeService)
 {
     pumpOutputPin = pin;
     pinMode(pumpOutputPin, OUTPUT);
@@ -22,7 +22,7 @@ boolean PumpController::getIsActive()
 void PumpController::setPumpSpeedSetpoint(int speed)
 {
     pumpDutyCycle = ((double)speed) / 100;
-    pumpActivationTime = millis();
+    pumpActivationTime = now();
     pumpNextActivationTime = pumpActivationTime + PUMP_MAX_ACTIVE_TIME;
 }
 
@@ -39,7 +39,7 @@ void PumpController::controlPumpSpeed()
         return;
     }
 
-    long nowTime = millis();
+    time_t nowTime = now();
     if (nowTime < pumpActivationTime + pumpDutyCycle * PUMP_MAX_ACTIVE_TIME)
     {
         digitalWrite(pumpOutputPin, HIGH);

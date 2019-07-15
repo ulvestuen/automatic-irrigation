@@ -1,6 +1,7 @@
-#include <model/IrrigationSystemStatus.h>
+#include <model/IrrigationSystemStatus.h>q
 
-IrrigationSystemStatus::IrrigationSystemStatus(std::vector<PumpController *> pumpControllerList)
+IrrigationSystemStatus::IrrigationSystemStatus(std::vector<PumpController *> pumpControllerList,
+                                               TimeService *timeService)
 {
 }
 

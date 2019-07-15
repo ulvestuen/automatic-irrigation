@@ -2,6 +2,8 @@
 #define PumpController_h
 
 #include <Arduino.h>
+#include <TimeLib.h>
+#include <service/TimeService.h>
 
 class PumpController
 {
@@ -11,13 +13,14 @@ private:
     int pumpSpeedSetpoint;
     uint8_t pumpOutputPin;
     double pumpDutyCycle = 0.0;
-    const double PUMP_MAX_ACTIVE_TIME = 10000.0;
-    long pumpActivationTime = 0;
-    long pumpNextActivationTime = pumpActivationTime + PUMP_MAX_ACTIVE_TIME;
+    const double PUMP_MAX_ACTIVE_TIME = 10.0;
+    time_t pumpActivationTime;
+    time_t pumpNextActivationTime;
+    TimeService *timeService;
 
 public:
-    PumpController();
-    PumpController(uint8_t pin);
+    PumpController(TimeService *timeService);
+    PumpController(uint8_t pin, TimeService *tService);
     void setIsActive(boolean active);
     boolean getIsActive();
     void setPumpSpeedSetpoint(int speed);

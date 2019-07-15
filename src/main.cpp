@@ -1,5 +1,7 @@
 #include <Arduino.h>
+#include <TimeLib.h>
 #include <service/WifiConnectionService.h>
+#include <service/TimeService.h>
 #include <api/IrrigationSystemApi.h>
 #include <model/IrrigationSystemStatus.h>
 #include <service/IrrigationSystemService.h>
@@ -7,6 +9,7 @@
 const std::vector<uint8_t> PUMP_PIN_LIST = {D8, D6};
 
 WifiConnectionService *wifiConnectionService;
+TimeService *timeService;
 std::vector<PumpController *> pumpControllerList;
 IrrigationSystemStatus *systemStatus;
 IrrigationSystemService *irrigationSystemService;
@@ -18,17 +21,21 @@ void setup(void)
   wifiConnectionService = new WifiConnectionService();
   wifiConnectionService->connect();
 
+  // Setup NTP synchronized time sevice.
+  timeService = new TimeService();
+
   // Setup Pump controllers, system status and services
   std::for_each(PUMP_PIN_LIST.begin(),
                 PUMP_PIN_LIST.end(),
                 [=](uint8_t pin) -> void {
-                  pumpControllerList.push_back(new PumpController(pin));
+                  pumpControllerList.push_back(new PumpController(pin, timeService));
                   Serial.println("Pump controller added for pin " + String(pin));
                 });
 
-  systemStatus = new IrrigationSystemStatus(pumpControllerList);
+  systemStatus = new IrrigationSystemStatus(pumpControllerList, timeService);
   irrigationSystemService = new IrrigationSystemService(systemStatus,
-                                                        pumpControllerList);
+                                                        pumpControllerList,
+                                                        timeService);
 
   // Setup API
   irrigationSystemApi = new IrrigationSystemApi(systemStatus,
@@ -40,4 +47,6 @@ void loop(void)
 {
   irrigationSystemApi->handleClient();
   irrigationSystemService->controlIrrigationSystem(systemStatus);
+  delay(2000);
+  timeService->getTime();
 }

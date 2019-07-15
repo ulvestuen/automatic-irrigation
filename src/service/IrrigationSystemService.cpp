@@ -1,12 +1,14 @@
 #include <service/IrrigationSystemService.h>
 
-IrrigationSystemService::IrrigationSystemService() {}
+IrrigationSystemService::IrrigationSystemService(TimeService *tService) {}
 
 IrrigationSystemService::IrrigationSystemService(IrrigationSystemStatus *status,
-                                                 std::vector<PumpController *> pCList)
+                                                 std::vector<PumpController *> pCList,
+                                                 TimeService *tService)
 {
     systemStatus = status;
     pumpControllerList = pCList;
+    timeService = tService;
 }
 
 void IrrigationSystemService::activatePump(int pumpId)
