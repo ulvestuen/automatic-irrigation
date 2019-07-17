@@ -27,11 +27,20 @@ time_t TimeService::getTime()
 {
     if (timeStatus() != timeNotSet)
     {
-        //digitalClockDisplay();
         return now();
     }
 
     return now();
+}
+
+int TimeService::getCurrentHour()
+{
+    return hour(getTime());
+}
+
+int TimeService::getCurrentMinute()
+{
+    return minute(getTime());
 }
 
 time_t TimeService::getNtpTime()
@@ -90,9 +99,9 @@ void TimeService::sendNTPpacket(IPAddress &address)
     Udp.endPacket();
 }
 
-void TimeService::digitalClockDisplay()
+void TimeService::printDigitalClock()
 {
-    // digital clock display of the time
+    // print digital clock of the current time
     Serial.print(hour());
     printDigits(minute());
     printDigits(second());
@@ -102,7 +111,7 @@ void TimeService::digitalClockDisplay()
     Serial.print(month());
     Serial.print(".");
     Serial.print(year());
-    Serial.println();
+    Serial.print(" - ");
 }
 
 void TimeService::printDigits(int digits)

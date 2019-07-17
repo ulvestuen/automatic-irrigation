@@ -48,6 +48,20 @@ void IrrigationSystemApi::setup()
     server->send(200, "text/plain", "Pump speeds: " + String(systemStatus->getPumpSpeeds()));
   });
 
+  server->on("/controlmode/manual", HTTP_POST, [=]() -> void {
+    Serial.println("Setting manual control mode...");
+    systemService->setControlMode(ControlMode::MANUAL);
+    Serial.println("Control mode set to MANUAL");
+    server->send(200, "text/plain", "Control mode set to MANUAL");
+  });
+
+  server->on("/controlmode/automatic", HTTP_POST, [=]() -> void {
+    Serial.println("Setting automatic control mode...");
+    systemService->setControlMode(ControlMode::AUTOMATIC);
+    Serial.println("Control mode set to AUTOMATIC");
+    server->send(200, "text/plain", "Control mode set to AUTOMATIC");
+  });
+
   server->begin();
   Serial.println("HTTP server started");
 }

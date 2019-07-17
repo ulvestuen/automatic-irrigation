@@ -5,7 +5,7 @@
 #include <model/IrrigationSystemStatus.h>
 #include <service/IrrigationSystemService.h>
 
-const std::vector<uint8_t> PUMP_PIN_LIST = {D8, D6};
+const std::vector<uint8_t> PUMP_PIN_LIST = {D8};
 
 WifiConnectionService *wifiConnectionService;
 TimeService *timeService;
@@ -24,12 +24,12 @@ void setup(void)
   timeService = new TimeService();
 
   // Setup Pump controllers, system status and services
-  std::for_each(PUMP_PIN_LIST.begin(),
-                PUMP_PIN_LIST.end(),
-                [=](uint8_t pin) -> void {
-                  pumpControllerList.push_back(new PumpController(pin, timeService));
-                  Serial.println("Pump controller added for pin " + String(pin));
-                });
+  for_each(PUMP_PIN_LIST.begin(),
+           PUMP_PIN_LIST.end(),
+           [=](uint8_t pin) -> void {
+             pumpControllerList.push_back(new PumpController(pin, timeService));
+             Serial.println("Pump controller added for pin " + String(pin));
+           });
 
   systemStatus = new IrrigationSystemStatus(pumpControllerList, timeService);
   irrigationSystemService = new IrrigationSystemService(systemStatus,
