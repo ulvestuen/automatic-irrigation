@@ -122,3 +122,8 @@ void TimeService::printDigits(int digits)
         Serial.print('0');
     Serial.print(digits);
 }
+
+boolean TimeService::isHealthy()
+{
+    return timeStatus() == timeSet;
+}

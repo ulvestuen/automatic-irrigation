@@ -127,3 +127,32 @@ boolean IrrigationSystemService::itIsTimeToStopIrrigation()
     return irrigationInProgress &&
            timeService->getTime() == lastIrrigationActivationTime + ACTIVE_PERIOD;
 }
+
+void IrrigationSystemService::setActivationHours(std::vector<int> activationHours)
+{
+    ACTIVATION_HOURS = activationHours;
+    Serial.print("Activation hours set to: ");
+    printVector(ACTIVATION_HOURS);
+}
+void IrrigationSystemService::setActivationMinutes(std::vector<int> activationMinutes)
+{
+    ACTIVATION_MINUTES = activationMinutes;
+    Serial.print("Activation minutes set to: ");
+    printVector(ACTIVATION_MINUTES);
+}
+void IrrigationSystemService::setActivePeriod(int activePeriod)
+{
+    ACTIVE_PERIOD = activePeriod;
+    Serial.println("Active period set to: " + String(ACTIVE_PERIOD) + " seconds");
+}
+
+void IrrigationSystemService::printVector(std::vector<int> vect)
+{
+    Serial.print("{ ");
+    for_each(vect.begin(),
+             vect.end(),
+             [](int i) -> void {
+                 Serial.print(String(i) + " ");
+             });
+    Serial.println("}");
+}

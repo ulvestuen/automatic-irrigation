@@ -15,6 +15,17 @@ void IrrigationSystemApi::setup()
     server->send(200, "text/plain", "Automatic irrigation system");
   });
 
+  server->on("/health", [=]() -> void {
+    if (systemStatus->isHealthy())
+    {
+      server->send(200, "text/plain", "OK");
+    }
+    else
+    {
+      server->send(500, "text/plain", "Not OK");
+    }
+  });
+
   // Pump
   server->on("/pump/activate", HTTP_POST, [=]() -> void {
     Serial.println("Activating pump control...");
@@ -57,6 +68,20 @@ void IrrigationSystemApi::setup()
 
   server->on("/controlmode/automatic", HTTP_POST, [=]() -> void {
     Serial.println("Setting automatic control mode...");
+
+    if (server->hasArg("activation_hours"))
+    {
+      systemService->setActivationHours(toVector(server->arg("activation_hours"), ","));
+    }
+    if (server->hasArg("activation_minutes"))
+    {
+      systemService->setActivationMinutes(toVector(server->arg("activation_minutes"), ","));
+    }
+    if (server->hasArg("active_period"))
+    {
+      systemService->setActivePeriod(server->arg("active_period").toInt());
+    }
+
     systemService->setControlMode(ControlMode::AUTOMATIC);
     Serial.println("Control mode set to AUTOMATIC");
     server->send(200, "text/plain", "Control mode set to AUTOMATIC");
@@ -69,4 +94,21 @@ void IrrigationSystemApi::setup()
 void IrrigationSystemApi::handleClient()
 {
   server->handleClient();
+}
+
+std::vector<int> IrrigationSystemApi::toVector(String stringWithDelimiter, std::string delimiter)
+{
+  std::vector<int> list;
+  std::string sList = std::string(stringWithDelimiter.c_str());
+
+  size_t pos = 0;
+  std::string token;
+  while ((pos = sList.find(delimiter)) != std::string::npos)
+  {
+    token = sList.substr(0, pos);
+    list.push_back(atoi(token.c_str()));
+    sList.erase(0, pos + delimiter.length());
+  }
+  list.push_back(atoi(sList.c_str()));
+  return list;
 }

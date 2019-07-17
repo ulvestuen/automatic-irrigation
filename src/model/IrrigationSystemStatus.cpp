@@ -14,3 +14,8 @@ String IrrigationSystemStatus::getPumpSpeeds()
 {
     return "";
 }
+
+boolean IrrigationSystemStatus::isHealthy()
+{
+    return timeService->isHealthy();
+}

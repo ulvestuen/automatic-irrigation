@@ -13,6 +13,7 @@ private:
   ESP8266WebServer *server;
   IrrigationSystemStatus *systemStatus;
   IrrigationSystemService *systemService;
+  std::vector<int> toVector(String stringWithDelimiter, std::string delimiter);
 
 public:
   IrrigationSystemApi();

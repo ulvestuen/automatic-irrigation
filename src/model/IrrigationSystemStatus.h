@@ -17,6 +17,7 @@ public:
     IrrigationSystemStatus(std::vector<PumpController *> pumpControllerList, TimeService *tService);
     String getPumpActiveStatuses();
     String getPumpSpeeds();
+    boolean isHealthy();
 };
 
 #endif

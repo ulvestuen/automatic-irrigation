@@ -9,6 +9,10 @@
 class TimeService
 {
 
+private:
+    static void sendNTPpacket(IPAddress &address);
+    void printDigits(int digits);
+
 public:
     TimeService();
     static time_t getNtpTime();
@@ -16,10 +20,7 @@ public:
     int getCurrentHour();
     int getCurrentMinute();
     void printDigitalClock();
-
-private:
-    static void sendNTPpacket(IPAddress &address);
-    void printDigits(int digits);
+    boolean isHealthy();
 };
 
 #endif
