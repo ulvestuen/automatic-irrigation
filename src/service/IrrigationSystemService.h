@@ -19,9 +19,9 @@ private:
     time_t lastIrrigationActivationTime;
 
     // Relevant for ControlMode::AUTOMATIC
-    std::vector<int> ACTIVATION_HOURS = {0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 1, 12, 13, 14, 15, 16, 17, 18, 19, 20, 21, 22, 23, 24};
-    std::vector<int> ACTIVATION_MINUTES = {0, 5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55};
-    int ACTIVE_PERIOD = 30;
+    std::vector<int> ACTIVATION_HOURS = {0};
+    std::vector<int> ACTIVATION_MINUTES = {0};
+    int ACTIVE_PERIOD = 0;
 
     void printVector(std::vector<int> vect);
 
