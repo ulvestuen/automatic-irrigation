@@ -5,6 +5,7 @@ IrrigationSystemApi::IrrigationSystemApi(IrrigationSystemStatus *status,
                                          IrrigationSystemService *service)
 {
   server = new ESP8266WebServer(80);
+  httpUpdater = new ESP8266HTTPUpdateServer();
   systemStatus = status;
   systemService = service;
 }
@@ -86,6 +87,9 @@ void IrrigationSystemApi::setup()
     Serial.println("Control mode set to AUTOMATIC");
     server->send(200, "text/plain", "Control mode set to AUTOMATIC");
   });
+
+  // Enable OTA update of firmware.
+  httpUpdater->setup(server);
 
   server->begin();
   Serial.println("HTTP server started");
