@@ -3,11 +3,11 @@
 IrrigationSystemService::IrrigationSystemService(TimeService *tService) {}
 
 IrrigationSystemService::IrrigationSystemService(IrrigationSystemStatus *status,
-                                                 std::vector<PumpController *> pCList,
+                                                 std::vector<PumpController *> pControllerList,
                                                  TimeService *tService)
 {
     systemStatus = status;
-    pumpControllerList = pCList;
+    pumpControllerList = pControllerList;
     timeService = tService;
 
     controlMode = ControlMode::MANUAL;

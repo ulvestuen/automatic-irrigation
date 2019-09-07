@@ -10,7 +10,6 @@ class PumpController
 
 private:
     boolean isActive = false;
-    int pumpSpeedSetpoint;
     uint8_t pumpOutputPin;
     double pumpDutyCycle = 0.0;
     const double PUMP_MAX_ACTIVE_TIME = 10.0;

@@ -10,12 +10,13 @@ class IrrigationSystemStatus
 {
 
 private:
+    DynamicJsonDocument *jsonStatus;
     std::vector<PumpController *> pumpControllerList;
     TimeService *timeService;
 
 public:
-    IrrigationSystemStatus(std::vector<PumpController *> pumpControllerList, TimeService *tService);
-    String getPumpActiveStatuses();
+    IrrigationSystemStatus(std::vector<PumpController *> pControllerList, TimeService *tService);
+    String getPumpStatuses();
     String getPumpSpeeds();
     boolean isHealthy();
 };

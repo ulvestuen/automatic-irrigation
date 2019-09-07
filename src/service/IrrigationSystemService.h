@@ -28,7 +28,7 @@ private:
 public:
     IrrigationSystemService(TimeService *tService);
     IrrigationSystemService(IrrigationSystemStatus *status,
-                            std::vector<PumpController *> pumpControllerList,
+                            std::vector<PumpController *> pControllerList,
                             TimeService *tService);
 
     void controlIrrigationSystem(IrrigationSystemStatus *status);

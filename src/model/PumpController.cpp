@@ -28,7 +28,7 @@ void PumpController::setPumpSpeedSetpoint(int speed)
 
 int PumpController::getPumpSpeedSetpoint()
 {
-    return pumpSpeedSetpoint;
+    return pumpDutyCycle * 100;
 }
 
 void PumpController::controlPumpSpeed()
